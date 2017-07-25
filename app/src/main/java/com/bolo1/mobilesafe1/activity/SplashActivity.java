@@ -1,6 +1,6 @@
 package com.bolo1.mobilesafe1.activity;
 
-import android.app.Dialog;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -12,29 +12,26 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bolo1.mobilesafe1.R;
+import com.bolo1.mobilesafe1.utils.ConstantValue;
+import com.bolo1.mobilesafe1.utils.Sputils;
 import com.bolo1.mobilesafe1.utils.StreamTools;
 import com.bolo1.mobilesafe1.utils.ToastUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -62,20 +59,30 @@ public class SplashActivity extends AppCompatActivity {
                     enterHome();
                     break;
                 case IO_EX:
-                    ToastUtil.show(SplashActivity.this, "IO异常");
                     enterHome();
+                    ToastUtil.show(SplashActivity.this, "IO异常");
                     break;
                 case JSON_EX:
-                    ToastUtil.show(SplashActivity.this, "JSON异常");
                     enterHome();
+                    ToastUtil.show(SplashActivity.this, "JSON异常");
                     break;
                 case URL_EX:
-                    ToastUtil.show(SplashActivity.this, "URL异常");
                     enterHome();
+                    ToastUtil.show(SplashActivity.this, "URL异常");
                     break;
             }
         }
     };
+    private RelativeLayout rl_root;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash_activity);
+        initUi();
+        initData();
+        initAnimation();
+    }
 
     private void showUpdateDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -125,10 +132,7 @@ public class SplashActivity extends AppCompatActivity {
                     Log.d(TAG, "下载进度+" + current);
                     super.onLoading(total, current, isUploading);
                     //正在下载
-
-
                 }
-
                 @Override
                 public void onFailure(HttpException e, String s) {
                     //下载失败
@@ -158,23 +162,22 @@ public class SplashActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
     private void enterHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_activity);
-        initUi();
-        initData();
+    private void initAnimation() {
+       AlphaAnimation alphaanimation=new  AlphaAnimation(0.3f,1f);
+        alphaanimation.setDuration(2000);
+        rl_root.startAnimation(alphaanimation);
     }
 
     private void initUi() {
         tv_version_name = (TextView) findViewById(R.id.tv_version_name);
+        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
     }
 
     private void initData() {
@@ -182,7 +185,11 @@ public class SplashActivity extends AppCompatActivity {
         //判断是否要更新应用
         mLocalVersionCode = getVersionCode();
         //判断是否小于服务器的版本号
-        checkVersion();
+        if(Sputils.getBoolean(this, ConstantValue.OPEN_UPDATE,false)){
+            checkVersion();
+        }else {
+            mHandler.sendEmptyMessageDelayed(ENTER_HOME,4000);
+        }
     }
 
     /**
@@ -197,10 +204,9 @@ public class SplashActivity extends AppCompatActivity {
                 try {
                     URL url = new URL("http://192.168.56.1:8080/update2.json");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setConnectTimeout(2000);
-                    connection.setReadTimeout(2000);
-                    int code = connection.getResponseCode();
-                    if (code == 200) {
+                    connection.setConnectTimeout(4000);
+                    connection.setReadTimeout(4000);
+                    if (connection.getResponseCode() == 200) {
                         //连接请求成功
                         InputStream in = connection.getInputStream();
                         String result = StreamTools.readFromStream(in);
@@ -234,10 +240,9 @@ public class SplashActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        mHandler.sendMessage(msg);
-                    } else {
-                        mHandler.sendMessage(msg);
                     }
+                        mHandler.sendMessage(msg);
+
                 }
             }
         }).start();
