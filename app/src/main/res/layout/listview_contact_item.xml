@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+<TextView
+    android:text="名称"
+    android:textColor="#57ba35"
+    android:id="@+id/tv_contact_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="18sp"/>
+    <TextView
+        android:textSize="18sp"
+        android:text="电话号码"
+        android:textColor="#000"
+        android:id="@+id/tv_contact_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

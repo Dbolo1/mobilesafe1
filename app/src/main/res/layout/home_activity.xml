@@ -32,6 +32,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:marqueeRepeatLimit="marquee_forever"
+        android:lines="1"
         android:text="我有一个小秘密啊小秘密~~~,就是不告诉你啊~就不告诉你！" />
     <GridView
         android:id="@+id/gv_name"

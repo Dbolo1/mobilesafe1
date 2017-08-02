@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bolo1.mobilesafe1.R;
 import com.bolo1.mobilesafe1.utils.ConstantValue;
+import com.bolo1.mobilesafe1.utils.Md5Util;
 import com.bolo1.mobilesafe1.utils.Sputils;
 import com.bolo1.mobilesafe1.utils.ToastUtil;
 
@@ -31,12 +32,10 @@ import org.w3c.dom.Text;
  */
 
 public class HomeActivity extends AppCompatActivity {
-
     private static final String TAG ="HomeActivity.class" ;
     private String[] mTitleStrs;
     private GridView gv_name;
     private int[] mDrawableId;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
         AlertDialog.Builder builder  = new AlertDialog.Builder(this);
         final AlertDialog dialog = builder.create();
         final View view = View.inflate(this,R.layout.confirmpsd_dialog,null);
-        dialog.setView(view);
+        dialog.setView(view,0,0,0,0);
         dialog.show();
     Button  bt_confirm_submit = (Button) view.findViewById(R.id.bt_confirm_submit);
         Button bt_confirm_cancel = (Button) view.findViewById(R.id.bt_confirm_cancel);
@@ -105,9 +104,9 @@ public class HomeActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(Confirmpsd)){
                     String psd=Sputils.getString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PAS,"");
                     //判断密码是否与本地密码一致
-                    if(Confirmpsd.equals(psd)){
+                    if(psd.equals(Md5Util.encoder(Confirmpsd))){
                         //密码一致则跳跃
-                        Intent intent=new Intent(getApplicationContext(),TestActivity.class);
+                        Intent intent=new Intent(getApplicationContext(),SetupOverActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }else{
@@ -124,15 +123,12 @@ public class HomeActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
-
     }
-
     private void SetPsdDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog  dialog = builder.create();
         final View view = View.inflate(this,R.layout.setpasdialog_dialog,null);
-        dialog.setView(view);
+        dialog.setView(view,0,0,0,0);
         dialog.show();
         Button bt_submit = (Button) view.findViewById(R.id.bt_submit);
         Button  bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
@@ -148,10 +144,10 @@ public class HomeActivity extends AppCompatActivity {
                     //密码都不为空时候
                     if (psd1.equals(confirm1)){
                         //确认密码正确时
-                        Intent intent=new Intent(getApplicationContext(),TestActivity.class);
+                        Intent intent=new Intent(getApplicationContext(),SetupOverActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
-                        Sputils.putString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PAS,psd1);
+                        Sputils.putString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PAS, Md5Util.encoder(psd1));
                     }else{
                         ToastUtil.show(getApplication(),"确认密码错误");
                     }
@@ -167,8 +163,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-
     class MyAdapter extends BaseAdapter{
 
         private TextView tv_title;

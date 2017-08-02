@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#95f55e"
+        android:gravity="center"
+        app:popupTheme="@style/AlertDialog.AppCompat.Light">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="2,手机卡绑定" />
+    </android.support.v7.widget.Toolbar>
+    <TextView
+        android:padding="5dp"
+        android:textSize="14sp"
+        android:text="通过绑定sim卡:\n下次重启如果发现sim变化则会发送报警短信"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.bolo1.mobilesafe1.view.SettingItem
+        xmlns:mobilesafe1="http://schemas.android.com/apk/res/com.bolo1.mobilesafe1"
+        android:id="@+id/siv_sim_bound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        mobilesafe1:des_title="点击绑定Sim卡"
+        mobilesafe1:des_on="Sim卡以绑定"
+        mobilesafe1:des_off="Sim卡未绑定"
+        >
+    </com.bolo1.mobilesafe1.view.SettingItem>
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:background="@android:drawable/presence_invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@android:drawable/presence_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@android:drawable/presence_invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@android:drawable/presence_invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:background="@drawable/bind"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            style="@style/NextBtn"
+            />
+        <Button
+            style="@style/PerBtn"/>
+    </RelativeLayout>
+</LinearLayout>
