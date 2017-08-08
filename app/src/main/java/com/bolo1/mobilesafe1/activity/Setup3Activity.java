@@ -18,7 +18,7 @@ import com.bolo1.mobilesafe1.utils.ToastUtil;
  * Created by 菠萝 on 2017/7/26.
  */
 
-public class Setup3Activity extends AppCompatActivity {
+public class Setup3Activity extends BaseSetupActivity {
 
     private EditText et_sim_number;
     private Button bt_select_number;
@@ -28,6 +28,28 @@ public class Setup3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup3_activity);
         initUI();
+    }
+
+    @Override
+    protected void showPrePage() {
+        Intent intent = new Intent(this, Setup2Activity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
+    }
+
+    @Override
+    protected void showNextPage() {
+        String phone=  et_sim_number.getText().toString();
+        if(!TextUtils.isEmpty(phone)){
+            Intent intent = new Intent(this, Setup4Activity.class);
+            startActivity(intent);
+            finish();
+            Sputils.putString(getApplicationContext(),ConstantValue.CONTACT_PHONE,phone);
+            overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
+        }else{
+            ToastUtil.show(this,"请输入电话号码");
+        }
     }
 
     private void initUI() {
@@ -53,23 +75,7 @@ public class Setup3Activity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    public void nextPage(View view) {
-        String phone=  et_sim_number.getText().toString();
-        if(!TextUtils.isEmpty(phone)){
-            Intent intent = new Intent(this, Setup4Activity.class);
-            startActivity(intent);
-            finish();
-            Sputils.putString(getApplicationContext(),ConstantValue.CONTACT_PHONE,phone);
-            overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
-        }else{
-            ToastUtil.show(this,"请输入电话号码");
-        }
-    }
-    public void perPage(View view) {
-        Intent intent = new Intent(this, Setup2Activity.class);
-        startActivity(intent);
-        finish();
-        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
-    }
+
+
 }
 

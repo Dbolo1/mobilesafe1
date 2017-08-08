@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,10 @@ public class ContactListActivity extends AppCompatActivity {
     List<HashMap<String, String>> contactsList = new ArrayList<>();
     private ListView lv_contact;
     private String number;
+    private final static String[] PHONES_PROJECTION = new String[]{
+            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER
+    };
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -103,22 +108,31 @@ public class ContactListActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Cursor cursor = getContentResolver().query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PHONES_PROJECTION, null, null, null);
                     if (cursor != null) {
-
                         while (cursor.moveToNext()) {
+                            String displayName = cursor.getString(0);
+                            String number = cursor.getString(1);
                             HashMap<String, String> hashMap = new HashMap<String, String>();
-                            //获取手机联系人姓名
-                            String displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds
-                                    .Phone.DISPLAY_NAME));
-                            hashMap.put("name", displayName);
-                            //获取手机联系人机号
-                            number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds
-                                    .Phone.NUMBER));
-                            hashMap.put("phone", number);
-                            contactsList.add(hashMap);
-
+                            if(!TextUtils.isEmpty(displayName)&&!TextUtils.isEmpty(number)){
+                                hashMap.put("name", displayName);
+                                hashMap.put("phone", number);
+                                contactsList.add(hashMap);
+                            }else {
+                                continue;
+                            }
+                            /**  //获取手机联系人姓名
+                             String displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds
+                             .Phone.DISPLAY_NAME));
+                             hashMap.put("name", displayName);
+                             //获取手机联系人机号
+                             number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds
+                             .Phone.NUMBER));
+                             hashMap.put("phone", number);
+                             contactsList.add(hashMap);
+                             **/
                         }
+                        Log.d(tag,contactsList.toString());
                         mHandler.sendEmptyMessage(0);
                     }
                 }
@@ -152,11 +166,11 @@ public class ContactListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (madapter != null) {
-                   HashMap<String,String> hashMap= madapter.getItem(position);
-                    String phone=hashMap.get("phone");
-                    Intent intent=new Intent();
-                    intent.putExtra("phone",phone);
-                    setResult(0,intent);
+                    HashMap<String, String> hashMap = madapter.getItem(position);
+                    String phone = hashMap.get("phone");
+                    Intent intent = new Intent();
+                    intent.putExtra("phone", phone);
+                    setResult(0, intent);
                     finish();
                 }
             }

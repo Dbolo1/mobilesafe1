@@ -17,7 +17,7 @@ import com.bolo1.mobilesafe1.utils.ToastUtil;
  * Created by 菠萝 on 2017/7/26.
  */
 
- public    class Setup4Activity  extends AppCompatActivity{
+public class Setup4Activity extends BaseSetupActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,45 +25,47 @@ import com.bolo1.mobilesafe1.utils.ToastUtil;
         initUI();
     }
 
+    @Override
+    protected void showPrePage() {
+        Intent intent = new Intent(this, Setup3Activity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
+    }
+
+    @Override
+    protected void showNextPage() {
+        boolean open_security = Sputils.getBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, false);
+        if (open_security) {
+            Intent intent = new Intent(this, SetupOverActivity.class);
+            startActivity(intent);
+            finish();
+            Sputils.putBoolean(this, ConstantValue.SET_OVER, true);
+            overridePendingTransition(R.anim.next_in_anim, R.anim.next_out_anim);
+        } else {
+            ToastUtil.show(getApplicationContext(), "请开启防盗保护");
+        }
+    }
+
     private void initUI() {
-        final CheckBox  cb_cbx= (CheckBox) findViewById(R.id.cb_cbx);
-       boolean open_security= Sputils.getBoolean(getApplicationContext(),ConstantValue.OPEN_SECURITY,false);
+        final CheckBox cb_cbx = (CheckBox) findViewById(R.id.cb_cbx);
+        boolean open_security = Sputils.getBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, false);
         cb_cbx.setChecked(open_security);
-        if(open_security){
+        if (open_security) {
             cb_cbx.setText("安全防护已开启");
-        }else{
+        } else {
             cb_cbx.setText("安全防护已关闭");
         }
         cb_cbx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     cb_cbx.setText("安全防护已开启");
-                }else{
+                } else {
                     cb_cbx.setText("安全防护已关闭");
                 }
-                Sputils.putBoolean(getApplicationContext(),ConstantValue.OPEN_SECURITY,isChecked);
+                Sputils.putBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, isChecked);
             }
         });
-    }
-    public void nextPage(View view) {
-            boolean open_security=Sputils.getBoolean(getApplicationContext(),ConstantValue.OPEN_SECURITY,false);
-        if(open_security){
-            Intent intent = new Intent(this, SetupOverActivity.class);
-            startActivity(intent);
-            finish();
-            Sputils.putBoolean(this, ConstantValue.SET_OVER,true);
-            overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
-        }else{
-            ToastUtil.show(getApplicationContext(),"请开启防盗保护");
-        }
-
-    }
-
-    public void perPage(View view) {
-        Intent intent = new Intent(this, Setup3Activity.class);
-        startActivity(intent);
-        finish();
-        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
     }
 }

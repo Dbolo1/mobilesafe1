@@ -9,13 +9,15 @@
         android:layout_height="?attr/actionBarSize"
         android:background="#95f55e"
         android:gravity="center"
-        app:popupTheme="@style/AlertDialog.AppCompat.Light">
+        app:popupTheme="@style/AlertDialog.AppCompat.Light"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
-            android:text="4.恭喜您,完成设置" />
+            android:text="4.恭喜您,完成设置"
+             />
     </android.support.v7.widget.Toolbar>
   <CheckBox
       android:id="@+id/cb_cbx"

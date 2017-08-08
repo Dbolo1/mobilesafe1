@@ -19,7 +19,7 @@ import com.bolo1.mobilesafe1.view.SettingItem;
  * Created by 菠萝 on 2017/7/26.
  */
 
-public  class Setup2Activity  extends AppCompatActivity{
+public  class Setup2Activity  extends BaseSetupActivity{
 
     private SettingItem siv_sim_bound;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +27,17 @@ public  class Setup2Activity  extends AppCompatActivity{
         setContentView(R.layout.setup2_activity);
         initUi();
     }
-    public void nextPage(View view){
+
+    @Override
+    protected void showPrePage() {
+        Intent intent=new Intent(this,Setup1Activity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
+    }
+
+    @Override
+    protected void showNextPage() {
         String serialNumber=Sputils.getString(this,ConstantValue.SIM_NUMBER,"");
         if(!TextUtils.isEmpty(serialNumber)){
             Intent intent=new Intent(this,Setup3Activity.class);
@@ -38,12 +48,8 @@ public  class Setup2Activity  extends AppCompatActivity{
             ToastUtil.show(this,"请绑定sim卡");
         }
     }
-    public void perPage(View view){
-        Intent intent=new Intent(this,Setup1Activity.class);
-        startActivity(intent);
-        finish();
-        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
-    }
+
+
     private void initUi() {
         siv_sim_bound = (SettingItem) findViewById(R.id.siv_sim_bound);
         String  sim_number= Sputils.getString(this,ConstantValue.SIM_NUMBER,"");
