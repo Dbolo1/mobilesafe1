@@ -3,11 +3,23 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Hello world"
 
-    />
-
+    <TextView
+        android:id="@+id/tv_test_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello world"
+        />
+    <Button
+        android:id="@+id/bt_quedin"
+        android:text="确定"
+        android:background="@drawable/call_locate_blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/bt_quxiao"
+        android:text="取消"
+        android:background="@drawable/call_locate_blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

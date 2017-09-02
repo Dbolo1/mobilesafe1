@@ -23,16 +23,17 @@ public class SetupOverActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Boolean set_over = Sputils.getBoolean(this, ConstantValue.SET_OVER, false);
-        if (set_over) {
-            //如果完成设置则跳转到设置显示
-            setContentView(R.layout.setupover_activity);
-        } else {
-            //如果没有完成则跳转到导航界面1
-            Intent intent = new Intent(this, Setup1Activity.class);
-            startActivity(intent);
-            finish();
-        }
+        boolean set_over = Sputils.getBoolean(this, ConstantValue.SET_OVER, false);
+//        if (set_over) {
+//            //如果完成设置则跳转到设置显示
+//            setContentView(R.layout.setupover_activity);
+//        } else {
+//            //如果没有完成则跳转到导航界面1
+//            Intent intent = new Intent(this, Setup1Activity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+        setContentView(R.layout.setupover_activity);
         initUi();
         initData();
     }

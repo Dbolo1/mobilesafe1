@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_blacknumber"
+        style="@style/TV_Set"
+        android:text="@string/blacknumber_phone" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/tv_blacknumber"
+        android:id="@+id/tv_blackmode_mode"
+        style="@style/TV_Set"
+        android:text="@string/blacknumber_mode"
+        />
+    <ImageView
+        android:id="@+id/im_blacknumber_delete"
+        android:background="@drawable/bt_delete_bg"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

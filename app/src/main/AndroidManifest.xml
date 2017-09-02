@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bolo1.mobilesafe1">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS"/>
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,17 +43,72 @@
         <activity android:name=".activity.Setup2Activity" />
         <activity android:name=".activity.Setup3Activity" />
         <activity android:name=".activity.Setup4Activity" />
+        <activity android:name=".activity.AToolActivity" />
+        <activity android:name=".activity.QueryPhoneAddress" />
+        <activity android:name=".activity.AppManager"/>
+
+        <activity android:name=".activity.BlackNumber"
+
+            android:label="@string/blacknumber_list"
+            />
+        <activity android:name=".activity.SmokeActivity"
+            android:theme="@style/Theme.notAnimation"
+            />
+        <activity android:name=".activity.ToastLocation"
+
+            android:theme="@style/TranslucentTheme"
+            />
+
         <activity android:name=".activity.ContactListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DELETE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.SmsReceiver">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.DeviceAdminSampleReceiver"
+            android:description="@string/sample_device_admin_description"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/sample_device_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_sample" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.LocationService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".service.AddressService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+        <service android:name=".service.RocketService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+        <service android:name=".service.BlackNumberService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
+
 </manifest>

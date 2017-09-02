@@ -75,6 +75,33 @@ public class Sputils {
             sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
         }
         sp.edit().remove(key).commit();
-
     }
+
+    /**
+     *
+     * @param ctx 上下文环境
+     * @param key  存储int的key
+     * @param value 存储的值
+     */
+    public static void putInt(Context ctx, String key, int value){
+        if(sp==null){
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        sp.edit().putInt(key,value).commit();
+    }
+
+    /**
+     *
+     * @param ctx  上下文环境
+     * @param key   获取Int类型的key
+     * @param defValue  默认为0
+     * @return 返回int的值
+     */
+    public static int getInt(Context ctx, String key, int defValue){
+        if(sp==null){
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        return sp.getInt(key,0);
+    }
+
 }

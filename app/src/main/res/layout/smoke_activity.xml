@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+android:layout_height="match_parent">
+    <ImageView
+
+        android:id="@+id/im_smoke_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/desktop_smoke_m"
+        android:layout_alignParentBottom="true"
+        />
+    <ImageView
+        android:layout_above="@id/im_smoke_bottom"
+
+        android:id="@+id/im_smoke_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/desktop_smoke_t"
+        />
+
+</RelativeLayout>

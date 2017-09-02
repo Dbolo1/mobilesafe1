@@ -28,6 +28,8 @@ public class Setup3Activity extends BaseSetupActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup3_activity);
         initUI();
+
+
     }
 
     @Override

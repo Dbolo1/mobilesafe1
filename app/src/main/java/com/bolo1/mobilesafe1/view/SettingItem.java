@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bolo1.mobilesafe1.R;
 
 
@@ -43,19 +42,14 @@ public class SettingItem extends RelativeLayout {
         cb_set_box = (CheckBox) findViewById(R.id.cb_set_box);
         initAttrs(attrs);
         tv_top_title.setText(mDestitle);
-
     }
-
     private void initAttrs(AttributeSet attrs) {
         Log.d(TAG, "attrs.getAttributeCount()==="+attrs.getAttributeCount() );
         
         mDestitle = attrs.getAttributeValue(NAMESPACE,"des_title");
         mDeson = attrs.getAttributeValue(NAMESPACE,"des_on");
         mDesoff = attrs.getAttributeValue(NAMESPACE,"des_off");
-    
-
     }
-
     public boolean isCheck() {
         return cb_set_box.isChecked();
     }

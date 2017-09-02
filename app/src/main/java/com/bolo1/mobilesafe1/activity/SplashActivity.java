@@ -1,6 +1,8 @@
 package com.bolo1.mobilesafe1.activity;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -8,6 +10,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +19,7 @@ import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bolo1.mobilesafe1.R;
 import com.bolo1.mobilesafe1.utils.ConstantValue;
 import com.bolo1.mobilesafe1.utils.Sputils;
@@ -24,9 +29,12 @@ import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -80,8 +88,46 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
         initUi();
+        initDB();
         initData();
         initAnimation();
+    }
+
+    private void initDB() {
+        initAddressDB("address.db");
+
+    }
+
+    private void initAddressDB(String dbName) {
+        File files = getFilesDir();
+        File file = new File(files, dbName);
+        if (file.exists()) {
+            return;
+        }
+        InputStream stream = null;
+        FileOutputStream fos = null;
+        try {
+            stream = getAssets().open(dbName);
+            fos = new FileOutputStream(file);
+            byte[] bs = new byte[1024];
+            int tem = -1;
+            while ((tem = stream.read(bs)) != -1) {
+                fos.write(bs, 0, tem);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stream != null && fos != null) {
+                    stream.close();
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
     private void showUpdateDialog() {
@@ -133,6 +179,7 @@ public class SplashActivity extends AppCompatActivity {
                     super.onLoading(total, current, isUploading);
                     //正在下载
                 }
+
                 @Override
                 public void onFailure(HttpException e, String s) {
                     //下载失败
@@ -170,7 +217,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initAnimation() {
-       AlphaAnimation alphaanimation=new  AlphaAnimation(0.3f,1f);
+        AlphaAnimation alphaanimation = new AlphaAnimation(0.3f, 1f);
         alphaanimation.setDuration(2000);
         rl_root.startAnimation(alphaanimation);
     }
@@ -185,10 +232,15 @@ public class SplashActivity extends AppCompatActivity {
         //判断是否要更新应用
         mLocalVersionCode = getVersionCode();
         //判断是否小于服务器的版本号
-        if(Sputils.getBoolean(this, ConstantValue.OPEN_UPDATE,false)){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
+        }
+        if (Sputils.getBoolean(this, ConstantValue.OPEN_UPDATE, false)) {
             checkVersion();
-        }else {
-            mHandler.sendEmptyMessageDelayed(ENTER_HOME,4000);
+        } else {
+            mHandler.sendEmptyMessageDelayed(ENTER_HOME, 4000);
+
         }
     }
 
@@ -241,7 +293,7 @@ public class SplashActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                        mHandler.sendMessage(msg);
+                    mHandler.sendMessage(msg);
 
                 }
             }

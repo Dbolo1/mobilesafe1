@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#95f55e"
+        android:gravity="center"
+        app:popupTheme="@style/AlertDialog.AppCompat.Light">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="高级功能" />
+    </android.support.v7.widget.Toolbar>
+    <TextView
+        android:id="@+id/tv_query_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@android:drawable/btn_star"
+        android:text="@string/query_address"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/selector_atool_item_bg"
+        />
+    <TextView
+        android:id="@+id/tv_sms_backup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@android:drawable/btn_star"
+        android:text="@string/sms_backup"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/selector_atool_item_bg"
+        />
+    <ProgressBar
+        android:id="@+id/pb_backup"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

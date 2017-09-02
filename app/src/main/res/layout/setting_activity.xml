@@ -10,15 +10,12 @@
         android:background="#95f55e"
         android:gravity="center"
         app:popupTheme="@style/AlertDialog.AppCompat.Light">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="设置列表" />
-
     </android.support.v7.widget.Toolbar>
-
     <com.bolo1.mobilesafe1.view.SettingItem
         xmlns:mobilesafe1="http://schemas.android.com/apk/res/com.bolo1.mobilesafe1"
         android:id="@+id/set_update"
@@ -27,6 +24,36 @@
         mobilesafe1:des_title="是否开启自动更新"
         mobilesafe1:des_off="自动更新以关闭"
         mobilesafe1:des_on="自动更新以开启"
+        >
+    </com.bolo1.mobilesafe1.view.SettingItem>
+    <com.bolo1.mobilesafe1.view.SettingItem
+        xmlns:mobilesafe1="http://schemas.android.com/apk/res/com.bolo1.mobilesafe1"
+        android:id="@+id/set_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        mobilesafe1:des_title="是否开启归属地址显示"
+        mobilesafe1:des_off="归属地址已关闭"
+        mobilesafe1:des_on="归属地址已开启"
+        >
+    </com.bolo1.mobilesafe1.view.SettingItem>
+    <com.bolo1.mobilesafe1.view.SettingClickItem
+        android:id="@+id/sci_toast_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </com.bolo1.mobilesafe1.view.SettingClickItem>
+    <com.bolo1.mobilesafe1.view.SettingClickItem
+        android:id="@+id/sci_toast_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </com.bolo1.mobilesafe1.view.SettingClickItem>
+    <com.bolo1.mobilesafe1.view.SettingItem
+        xmlns:mobilesafe1="http://schemas.android.com/apk/res/com.bolo1.mobilesafe1"
+        android:id="@+id/set_blacknumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        mobilesafe1:des_title="是否开启拦截黑名单"
+        mobilesafe1:des_off="黑名单拦截已关闭"
+        mobilesafe1:des_on="黑名单拦截已开启"
         >
     </com.bolo1.mobilesafe1.view.SettingItem>
 </LinearLayout>

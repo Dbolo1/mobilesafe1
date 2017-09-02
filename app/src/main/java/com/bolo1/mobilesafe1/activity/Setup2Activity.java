@@ -1,9 +1,13 @@
 package com.bolo1.mobilesafe1.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -25,7 +29,12 @@ public  class Setup2Activity  extends BaseSetupActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup2_activity);
-        initUi();
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)!=
+                PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE},1);
+        }
+            initUi();
+
     }
 
     @Override

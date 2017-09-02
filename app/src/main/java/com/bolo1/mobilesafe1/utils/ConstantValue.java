@@ -29,4 +29,16 @@ public class ConstantValue {
      * 是否开启安全防盗
      */
     public static String OPEN_SECURITY="open_security";
+
+    /**
+     * 获取归属地址吐司的风格索引
+     */
+    public static String TOAST_STYLE= "toast_style";
+    /**
+     * 记录归属地址栏的移动key
+     */
+    public static String TOAST_LOCATION;
+    public static String TOAST_LOCATION_X= "toast_location_x";
+    public static String TOAST_LOCATION_Y= "toast_location_y";
+
 }

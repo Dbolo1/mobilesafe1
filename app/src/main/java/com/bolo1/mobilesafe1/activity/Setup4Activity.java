@@ -1,5 +1,8 @@
 package com.bolo1.mobilesafe1.activity;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.bolo1.mobilesafe1.R;
+import com.bolo1.mobilesafe1.receiver.DeviceAdminSampleReceiver;
 import com.bolo1.mobilesafe1.utils.ConstantValue;
 import com.bolo1.mobilesafe1.utils.Sputils;
 import com.bolo1.mobilesafe1.utils.ToastUtil;
@@ -18,6 +22,9 @@ import com.bolo1.mobilesafe1.utils.ToastUtil;
  */
 
 public class Setup4Activity extends BaseSetupActivity {
+    private DevicePolicyManager mDPM;
+    private ComponentName mDeviceAdminSample;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +55,8 @@ public class Setup4Activity extends BaseSetupActivity {
     }
 
     private void initUI() {
+        mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mDeviceAdminSample = new ComponentName(this,DeviceAdminSampleReceiver.class);
         final CheckBox cb_cbx = (CheckBox) findViewById(R.id.cb_cbx);
         boolean open_security = Sputils.getBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, false);
         cb_cbx.setChecked(open_security);
@@ -61,8 +70,15 @@ public class Setup4Activity extends BaseSetupActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     cb_cbx.setText("安全防护已开启");
+                    Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                    intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdminSample);
+                    intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "设备管理器");
+                    startActivity(intent);
                 } else {
                     cb_cbx.setText("安全防护已关闭");
+                    if(mDPM.isAdminActive(mDeviceAdminSample)){
+                        mDPM.removeActiveAdmin(mDeviceAdminSample);
+                    }
                 }
                 Sputils.putBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, isChecked);
             }

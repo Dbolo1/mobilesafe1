@@ -20,11 +20,12 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String phone=Sputils.getString(context, ConstantValue.CONTACT_PHONE,"");
         TelephonyManager tm= (TelephonyManager) context.getSystemService(Context.TELECOM_SERVICE);
-       String simNumber= tm.getSimSerialNumber();
+       String simNumber= tm.getSimSerialNumber()+"xxx";
         if(!phone.equals(simNumber)){
             SmsManager sms=SmsManager.getDefault();
             String phone1=Sputils.getString(context, ConstantValue.CONTACT_PHONE,"");
             sms.sendTextMessage(phone1,null,"sms change!!!",null,null);
+
         }
     }
 }
