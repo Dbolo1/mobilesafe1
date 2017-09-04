@@ -18,4 +18,12 @@
     <string name="app_manager">软件管理</string>
     <string name="phone_memory">内存可用空间:</string>
     <string name="sd_memory">sd卡可用空间:</string>
+    <string name="tv_uninstall">卸载</string>
+    <string name="tv_start">启动</string>
+    <string name="tv_share">分享</string>
+    <string name="process_manage">进程管理</string>
+    <string name="select_all">全选</string>
+    <string name="invert_select">反选</string>
+    <string name="fly_memory_clear">一键清理</string>
+    <string name="process_setting">设置</string>
 </resources>

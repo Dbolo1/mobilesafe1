@@ -19,23 +19,6 @@ public class ToastUtil {
     private  String mnessage;
     private  Toast mToast;
 
-    public ToastUtil(Context cxt, String msg){
-        mnessage = msg;
-        LayoutInflater inflater= (LayoutInflater) cxt.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=inflater.inflate(R.layout.show_toast,null);
-        TextView tv_toast_view   = (TextView) view.findViewById(R.id.tv_toast_view);
-        tv_toast_view.setText(mnessage);
-        Log.i("ToastUtil", "Toast start...");
-
-        if(mToast==null){
-            mToast = new Toast(cxt);
-            Log.i("ToastUtil", "Toast create...");
-
-        }
-        mToast.setGravity(Gravity.CENTER,0,0);
-//        mToast.setDuration(Toast.LENGTH_LONG);
-        mToast.setView(view);
-    }
 
     /**
      *
