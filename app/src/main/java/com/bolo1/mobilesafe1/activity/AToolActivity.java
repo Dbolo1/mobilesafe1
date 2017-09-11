@@ -55,6 +55,20 @@ public class AToolActivity extends AppCompatActivity {
                 showProgress();
             }
         });
+        TextView ttv_common_number = (TextView) findViewById(R.id.ttv_common_number);
+        ttv_common_number.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),CommonNumberQueryActivity.class));
+            }
+        });
+        TextView tv_app_lock = (TextView) findViewById(R.id.tv_app_lock);
+        tv_app_lock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AppLockManager.class));
+            }
+        });
     }
 
     private void showProgress() {

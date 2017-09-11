@@ -11,16 +11,20 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
-
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,7 +39,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.Setup1Activity" />
@@ -43,22 +53,32 @@
         <activity android:name=".activity.Setup2Activity" />
         <activity android:name=".activity.Setup3Activity" />
         <activity android:name=".activity.Setup4Activity" />
-        <activity android:name=".activity.ProcessManage"/>
+        <activity android:name=".activity.ProcessManage" />
         <activity android:name=".activity.AToolActivity" />
         <activity android:name=".activity.QueryPhoneAddress" />
-        <activity android:name=".activity.AppManager"/>
-
-        <activity android:name=".activity.BlackNumber"
-
-            android:label="@string/blacknumber_list"
+        <activity android:name=".activity.ProcessSettingActivity" />
+        <activity android:name=".activity.AppManager" />
+        <activity android:name=".activity.CommonNumberQueryActivity" />
+        <activity android:name=".activity.AppLockManager"/>
+        <activity android:name=".activity.AntiVirusActivity"/>
+        <activity android:name=".activity.CacheCleanActivity"
+            android:label=""
             />
-        <activity android:name=".activity.SmokeActivity"
-            android:theme="@style/Theme.notAnimation"
+        <activity android:name=".activity.EnterPasActivity"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
             />
-        <activity android:name=".activity.ToastLocation"
+        <activity
+            android:name=".activity.BlackNumber"
 
-            android:theme="@style/TranslucentTheme"
-            />
+            android:label="@string/blacknumber_list" />
+        <activity
+            android:name=".activity.SmokeActivity"
+            android:theme="@style/Theme.notAnimation" />
+        <activity
+            android:name=".activity.ToastLocation"
+
+            android:theme="@style/TranslucentTheme" />
 
         <activity android:name=".activity.ContactListActivity">
             <intent-filter>
@@ -67,11 +87,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".receiver.BootReceiver">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+    </receiver>
+        <receiver android:name=".receiver.KillProcessReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.KILL_BACKGROUND_PROCESS" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".receiver.SmsReceiver">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
@@ -93,6 +120,16 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".receiver.MyAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/process_widget_provider" />
+        </receiver>
+
+
         <service
             android:name=".service.LocationService"
             android:enabled="true"
@@ -100,16 +137,28 @@
         <service
             android:name=".service.AddressService"
             android:enabled="true"
-            android:exported="true">
-        </service>
-        <service android:name=".service.RocketService"
+            android:exported="true"></service>
+        <service
+            android:name=".service.RocketService"
             android:enabled="true"
-            android:exported="true">
-        </service>
-        <service android:name=".service.BlackNumberService"
+            android:exported="true"></service>
+        <service
+            android:name=".service.BlackNumberService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"></service>
+        <service
+            android:name=".service.LockCleanService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service android:name=".service.UpdateWidgetService"
+            android:enabled="true"
+            android:exported="true"
+            >
         </service>
+        <service android:name=".service.WatchDogService"
+            android:enabled="true"
+            android:exported="true"
+            />
     </application>
 
 </manifest>

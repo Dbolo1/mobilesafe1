@@ -2,12 +2,10 @@ package com.bolo1.mobilesafe1.activity;
 
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -29,11 +27,6 @@ import com.bolo1.mobilesafe1.utils.ConstantValue;
 import com.bolo1.mobilesafe1.utils.Md5Util;
 import com.bolo1.mobilesafe1.utils.Sputils;
 import com.bolo1.mobilesafe1.utils.ToastUtil;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by 菠萝 on 2017/7/14.
@@ -114,10 +107,11 @@ public class HomeActivity extends AppCompatActivity {
                     case 3:
                         startActivity(new Intent(getApplicationContext(),ProcessManage.class));
                         break;
+                    case 5:
+                        startActivity(new Intent(getApplicationContext(),AntiVirusActivity.class));
+                        break;
                     case 6:
-                        Intent intent1 = new Intent(getApplicationContext(), TestActivity.class);
-                        startActivity(intent1);
-                        finish();
+                        startActivity(new Intent(getApplicationContext(),CacheCleanActivity.class));
                         break;
                     case 7:
                         startActivity(new Intent(getApplicationContext(), AToolActivity.class));

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.bolo1.mobilesafe1.R;
 import com.bolo1.mobilesafe1.service.AddressService;
 import com.bolo1.mobilesafe1.service.BlackNumberService;
+import com.bolo1.mobilesafe1.service.WatchDogService;
 import com.bolo1.mobilesafe1.utils.ConstantValue;
 import com.bolo1.mobilesafe1.utils.ServiceUtils;
 import com.bolo1.mobilesafe1.utils.Sputils;
@@ -52,11 +53,31 @@ public class SettingActivity extends AppCompatActivity {
         initToastStyle();
         initToastLocation();
         initBlackNumber();
+        initAppLock();
+    }
+
+    private void initAppLock() {
+        final SettingItem set_app_lock = (SettingItem) findViewById(R.id.set_app_lock);
+        boolean running = ServiceUtils.isRunning(this, "com.bolo1.mobilesafe1.service.WatchDogService");
+        set_app_lock.setCheck(running);
+        set_app_lock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isCheck= set_app_lock.isCheck();
+                set_app_lock.setCheck(!isCheck);
+                if(!isCheck){
+                    startService(new Intent(getApplicationContext(),WatchDogService.class));
+                }else {
+                    stopService(new Intent(getApplicationContext(),WatchDogService.class));
+                }
+            }
+        });
+
     }
 
     private void initBlackNumber() {
         final SettingItem set_blacknumber = (SettingItem) findViewById(R.id.set_blacknumber);
-        boolean running = ServiceUtils.isRunning(this, "com.bolo1.mobilesafe1.activity.BlacknumberService");
+        boolean running = ServiceUtils.isRunning(this, "com.bolo1.mobilesafe1.service.BlacknumberService");
         set_blacknumber.setCheck(running);
         set_blacknumber.setOnClickListener(new View.OnClickListener() {
             @Override

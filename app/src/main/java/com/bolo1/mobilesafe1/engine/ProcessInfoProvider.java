@@ -133,4 +133,19 @@ public class ProcessInfoProvider {
         ActivityManager am = (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
         am.killBackgroundProcesses(processInfo.packageName);
     }
+
+    /**
+     *  杀死除本程序以为的所有进程
+     * @param cxt 上下文
+     */
+    public static void KillAll(Context cxt) {
+        ActivityManager am= (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses =am.getRunningAppProcesses();
+        for(ActivityManager.RunningAppProcessInfo appProcessInfo :runningAppProcesses){
+            if(appProcessInfo.processName.equals(cxt.getPackageName())){
+                continue;
+            }
+            am.killBackgroundProcesses(appProcessInfo.processName);
+        }
+    }
 }

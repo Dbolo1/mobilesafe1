@@ -26,4 +26,11 @@
     <string name="invert_select">反选</string>
     <string name="fly_memory_clear">一键清理</string>
     <string name="process_setting">设置</string>
+    <string name="common_number_query">常用号码查询</string>
+    <string name="app_lock">程序锁</string>
+    <string name="unlock">未加锁</string>
+    <string name="lock">已加锁</string>
+    <string name="phone_antivirus">手机杀毒</string>
+    <string name="cache_clean">缓存清理</string>
+    <string name="cache_clean_all">清理全部</string>
 </resources>

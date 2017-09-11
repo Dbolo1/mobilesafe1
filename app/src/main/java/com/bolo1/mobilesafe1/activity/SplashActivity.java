@@ -26,6 +26,7 @@ import com.bolo1.mobilesafe1.utils.Sputils;
 import com.bolo1.mobilesafe1.utils.StreamTools;
 import com.bolo1.mobilesafe1.utils.ToastUtil;
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.bitmap.factory.BitmapFactory;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
@@ -40,6 +41,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static android.content.Intent.EXTRA_SHORTCUT_INTENT;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -90,12 +93,25 @@ public class SplashActivity extends AppCompatActivity {
         initUi();
         initDB();
         initData();
+        initShortcut();
         initAnimation();
+    }
+
+    private void initShortcut() {
+        Intent intent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
+                android.graphics.BitmapFactory.decodeResource(getResources(), R.drawable.img_1));
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "安全卫士");
+        Intent shortcutIntent = new Intent("android.intent.action.HOME");
+        shortcutIntent.addCategory("android.intent.category.DEFAULT");
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT,shortcutIntent);
+        sendBroadcast(intent);
     }
 
     private void initDB() {
         initAddressDB("address.db");
-
+        initAddressDB("commonnum.db");
+        initAddressDB("antivirus.db");
     }
 
     private void initAddressDB(String dbName) {

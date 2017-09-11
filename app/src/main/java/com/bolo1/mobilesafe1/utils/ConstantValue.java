@@ -41,4 +41,13 @@ public class ConstantValue {
     public static String TOAST_LOCATION_X= "toast_location_x";
     public static String TOAST_LOCATION_Y= "toast_location_y";
 
+    /**
+     * 是否开启系统进程隐藏的key
+     */
+    public static String SHOW_SYSTEM= "show_system";
+
+    /**
+     * 是否开启锁屏清理的key
+     */
+    public static String LOCK_CLEAN= "lock_clean";
 }

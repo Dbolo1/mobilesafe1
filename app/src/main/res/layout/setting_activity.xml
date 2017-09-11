@@ -56,4 +56,14 @@
         mobilesafe1:des_on="黑名单拦截已开启"
         >
     </com.bolo1.mobilesafe1.view.SettingItem>
+    <com.bolo1.mobilesafe1.view.SettingItem
+        xmlns:mobilesafe1="http://schemas.android.com/apk/res/com.bolo1.mobilesafe1"
+        android:id="@+id/set_app_lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        mobilesafe1:des_title="是否开启程序锁"
+        mobilesafe1:des_off="程序锁已关闭"
+        mobilesafe1:des_on="程序锁已开启"
+        >
+    </com.bolo1.mobilesafe1.view.SettingItem>
 </LinearLayout>

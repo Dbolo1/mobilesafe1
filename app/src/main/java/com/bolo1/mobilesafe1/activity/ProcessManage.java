@@ -1,5 +1,6 @@
 package com.bolo1.mobilesafe1.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +23,8 @@ import com.bolo1.mobilesafe1.db.domain.AppInfo;
 import com.bolo1.mobilesafe1.db.domain.ProcessInfo;
 import com.bolo1.mobilesafe1.engine.AppInfoProvider;
 import com.bolo1.mobilesafe1.engine.ProcessInfoProvider;
+import com.bolo1.mobilesafe1.utils.ConstantValue;
+import com.bolo1.mobilesafe1.utils.Sputils;
 import com.bolo1.mobilesafe1.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -84,7 +87,12 @@ public class ProcessManage extends AppCompatActivity implements View.OnClickList
 
         @Override
         public int getCount() {
-            return mCustomerList.size() + mSystemList.size() + 2;
+            boolean show_system=Sputils.getBoolean(getApplicationContext(), ConstantValue.SHOW_SYSTEM,false);
+            if (show_system){
+                return mCustomerList.size()+1;
+            }else {
+                return mCustomerList.size() + mSystemList.size() + 2;
+            }
         }
 
         @Override
@@ -278,8 +286,23 @@ public class ProcessManage extends AppCompatActivity implements View.OnClickList
                 clearAll();
                 break;
             case R.id.bt_process_setting :
+                setting();
                 break;
         }
+    }
+
+    /**
+     * 设置系统隐藏与锁屏清理
+     */
+    private void setting() {
+       Intent intent= new Intent(this,ProcessSettingActivity.class);
+       startActivityForResult(intent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+         adapter.notifyDataSetChanged();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
